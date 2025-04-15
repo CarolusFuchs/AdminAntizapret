@@ -119,12 +119,6 @@ install() {
     read -p "Введите другой порт: " APP_PORT
   done
 
-  # Проверка занятости порта 80 для редиректа
-  if check_port 80; then
-      echo "${RED}Порт 80 уже занят! Невозможно установить сервис редиректа${NC}"
-      exit 1
-  fi
-
   # Обновление пакетов
   echo "${YELLOW}Обновление списка пакетов...${NC}"
   apt-get update -qq
@@ -192,36 +186,11 @@ Environment="PYTHONUNBUFFERED=1"
 WantedBy=multi-user.target
 EOL
 
-# Создание systemd сервиса для редиректа
-echo "${YELLOW}Создание systemd сервиса для HTTP редиректа...${NC}"
-cat > "/etc/systemd/system/http-redirect.service" <<EOL
-[Unit]
-Description=HTTP Redirect Service
-After=network.target
-
-[Service]
-User=root
-Group=root
-WorkingDirectory=$INSTALL_DIR
-ExecStart=$VENV_PATH/bin/python $INSTALL_DIR/http_redirect.py
-Restart=always
-Environment="PYTHONUNBUFFERED=1"
-
-[Install]
-WantedBy=multi-user.target
-EOL
-
   # Включение и запуск сервиса
   systemctl daemon-reload
   systemctl enable "$SERVICE_NAME"
   systemctl start "$SERVICE_NAME"
   check_error "Не удалось запустить сервис"
-
-  # Включение и запуск сервиса редиректа
-  systemctl daemon-reload
-  systemctl enable http-redirect
-  systemctl start http-redirect
-  check_error "Не удалось запустить сервис редиректа"
 
   # Проверка установки AntiZapret-VPN
   echo "${YELLOW}Проверка установки AntiZapret-VPN...${NC}"
@@ -394,13 +363,6 @@ uninstall() {
       rm -f "/etc/systemd/system/$SERVICE_NAME.service"
       systemctl daemon-reload
       
-      # Остановка и удаление http_redirect
-      printf "%s\n" "${YELLOW}Остановка сервиса http_redirect...${NC}"
-      systemctl stop http_redirect
-      systemctl disable http_redirect
-      rm -f "/etc/systemd/system/http_redirect.service"
-      systemctl daemon-reload
-
       # Удаление файлов
       printf "%s\n" "${YELLOW}Удаление файлов...${NC}"
       rm -rf "$INSTALL_DIR"

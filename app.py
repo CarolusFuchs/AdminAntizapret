@@ -17,19 +17,24 @@ from dotenv import load_dotenv
 import time
 import platform
 import ssl
+from werkzeug.serving import run_simple
 
 app = Flask(__name__)
 load_dotenv()
 
+# Перенаправление HTTP в HTTPS
+@app.before_request
+def before_request():
+    if request.scheme != 'https':
+        return redirect(url_for('index', _external=True, _scheme='https'))
+    
 app.secret_key = os.urandom(24)
 
 csrf = CSRFProtect(app)
 port = int(os.getenv('APP_PORT', '5050'))
 
-cert_file = '/opt/AdminAntizapret/letsencrypt-cert.pem'
-key_file = '/opt/AdminAntizapret/letsencrypt-key.pem'
-context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-context.load_cert_chain(cert_file, key_file)
+cert_file = '/etc/webmin/fullchain.pem'
+key_file = '/etc/webmin/letsencrypt-key.pem'
 
 CONFIG_PATHS = {
     "openvpn": [
@@ -550,9 +555,10 @@ def settings():
 
 if __name__ == '__main__':
     port = int(os.getenv('APP_PORT', '5050'))
-    app.run(
-        host='0.0.0.0',
-        port=port,
-        ssl_context=context,
+    run_simple(
+        '0.0.0.0',
+        port,
+        app,
+        ssl_context=(cert_file, key_file),
         debug=False
     )
