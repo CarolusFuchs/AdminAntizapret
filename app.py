@@ -16,14 +16,20 @@ from flask_wtf.csrf import CSRFProtect
 from dotenv import load_dotenv
 import time
 import platform
-
-load_dotenv() 
-
-port = int(os.getenv('APP_PORT', '5050'))
+import ssl
 
 app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY")
-csrf = CSRFProtect(app) 
+load_dotenv()
+
+app.secret_key = os.urandom(24)
+
+csrf = CSRFProtect(app)
+port = int(os.getenv('APP_PORT', '5050'))
+
+cert_file = '/opt/AdminAntizapret/letsencrypt-cert.pem'
+key_file = '/opt/AdminAntizapret/letsencrypt-key.pem'
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+context.load_cert_chain(cert_file, key_file)
 
 CONFIG_PATHS = {
     "openvpn": [
@@ -44,12 +50,10 @@ MIN_CERT_EXPIRE = 1
 MAX_CERT_EXPIRE = 365
 
 # Настройка БД
+app.config['PREFERRED_URL_SCHEME'] = 'https'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
-# Секретный ключ для сессий
-app.secret_key = os.urandom(24)
 
 # Модель пользователя для работы с БД
 class User(db.Model):
@@ -545,4 +549,10 @@ def settings():
     return render_template('settings.html', port=current_port, users=users)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=port)
+    port = int(os.getenv('APP_PORT', '5050'))
+    app.run(
+        host='0.0.0.0',
+        port=port,
+        ssl_context=context,
+        debug=False
+    )
