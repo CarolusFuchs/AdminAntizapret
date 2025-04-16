@@ -14,4 +14,4 @@ flask_wtf
 psutil
 flask_cors
 aiohttp
-aiohttp_sslcontext
+ssl
