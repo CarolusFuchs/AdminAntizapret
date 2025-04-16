@@ -13,4 +13,4 @@ python-dotenv
 flask_wtf
 psutil
 flask_cors
-aiohttp==3.8.4
+aiohttp
