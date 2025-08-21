@@ -7,13 +7,30 @@ body {
   color: hsl(0, 0%, 100%);
   margin: 0;
   padding: 0;
-  background-image: url("../img/login-bg.png");
+  min-height: 100dvh;
+  /* --- СТИЛИ ФОНА УДАЛЕНЫ ОТСЮДА И ПЕРЕНЕСЕНЫ В ::before --- */
+  position: relative; /* Необходимо для корректной работы z-index */
+  z-index: 1; /* Размещаем контент поверх псевдо-фона */
+}
+
+/* --- НОВЫЙ ПСЕВДО-ЭЛЕМЕНТ ДЛЯ ФОНА --- */
+/* Этот элемент будет служить стабильным фоном, который не масштабируется при скролле */
+body::before {
+  content: '';
+  position: fixed; /* Фиксируем фон */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Используем vh, так как элемент фиксирован и не скроллится */
+  z-index: -1; /* Помещаем фон за контентом */
+  
+  /* Фон по умолчанию для компьютеров */
+  background-image: url("../img/LogoBau.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 100vh;
 }
+
 
 /*=============== MAIN CONTAINER ===============*/
 .container {
@@ -21,7 +38,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: 2rem;
   box-sizing: border-box;
 }
@@ -89,14 +106,10 @@ h1 {
 .file-list {
   display: flex;
   justify-content: center;
-  /* Р¦РµРЅС‚СЂРёСЂСѓРµРј РєРѕР»РѕРЅРєРё */
   gap: 1rem;
   margin: 2rem auto;
-  /* Р¦РµРЅС‚СЂРёСЂСѓРµРј РІРµСЃСЊ Р±Р»РѕРє */
   max-width: 1200px;
-  /* РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ С€РёСЂРёРЅР° РєРѕРЅС‚РµР№РЅРµСЂР° */
   width: 90%;
-  /* РЁРёСЂРёРЅР° РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ СЌРєСЂР°РЅР° */
   overflow-x: auto;
 }
 
@@ -108,48 +121,35 @@ h1 {
   padding: 1.5rem;
   min-width: 0;
   border-color: #4caf50;
-  /* Р—РµР»РµРЅС‹Р№ С†РІРµС‚ РґР»СЏ РѕС‚Р»РёС‡РёСЏ */
   width: 60%;
-  /* РљР°Р¶РґР°СЏ РєРѕР»РѕРЅРєР° Р·Р°РЅРёРјР°РµС‚ 60% РѕС‚ file-list */
   max-width: 500px;
-  /* РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ С€РёСЂРёРЅР° РєРѕР»РѕРЅРєРё */
   box-sizing: border-box;
   align-items: center;
 }
 
 .scrollable {
   overflow: visible;
-  /* РџРѕР»РЅРѕСЃС‚СЊСЋ СѓР±РёСЂР°РµРј РїСЂРѕРєСЂСѓС‚РєСѓ */
   max-height: none;
-  /* РЈР±РёСЂР°РµРј РѕРіСЂР°РЅРёС‡РµРЅРёРµ РІС‹СЃРѕС‚С‹ */
 }
 
-/* РЈРІРµР»РёС‡РёРІР°РµРј РѕС‚СЃС‚СѓРїС‹ РјРµР¶РґСѓ СЃС‚СЂРѕРєР°РјРё С‚Р°Р±Р»РёС†С‹ */
 .file-list tbody tr {
   height: 48px;
-  /* Р¤РёРєСЃРёСЂРѕРІР°РЅРЅР°СЏ РІС‹СЃРѕС‚Р° СЃС‚СЂРѕРє */
 }
 
 table {
   width: 100%;
   border-collapse: separate;
   table-layout: auto;
-  /* РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРёР№ СЂР°СЃС‡РµС‚ С€РёСЂРёРЅС‹ */
   text-align: center;
-  /* Р’С‹СЂР°РІРЅРёРІР°РЅРёРµ С‚РµРєСЃС‚Р° РїРѕ С†РµРЅС‚СЂСѓ */
 }
 
 th,
 td {
   border: 1px solid hsl(0, 0%, 80%);
-  /* Р¦РІРµС‚ РѕР±РІРѕРґРєРё */
   padding: 0.75rem;
   text-align: center;
-  /* Р’С‹СЂР°РІРЅРёРІР°РЅРёРµ С‚РµРєСЃС‚Р° РїРѕ С†РµРЅС‚СЂСѓ */
   vertical-align: middle;
-  /* Р’С‹СЂР°РІРЅРёРІР°РЅРёРµ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ РїРѕ РІРµСЂС‚РёРєР°Р»Рё */
   word-break: break-word;
-  /* РџРµСЂРµРЅРѕСЃ РґР»РёРЅРЅС‹С… СЃР»РѕРІ */
 }
 
 td {
@@ -185,6 +185,11 @@ th {
 
 /*=============== RESPONSIVE STYLES ===============*/
 @media (max-width: 768px) {
+  /* --- Фон для мобильных --- */
+  body::before {
+    background-image: url("../img/LogoBauT.jpg");
+  }
+
   .file-list {
     flex-direction: column;
     align-items: center;
@@ -224,10 +229,8 @@ th {
   color: hsl(0, 0%, 100%);
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
-  /* Р’Р°Р¶РЅРѕ РґР»СЏ РѕРґРёРЅР°РєРѕРІС‹С… СЂР°Р·РјРµСЂРѕРІ */
 }
 
-/* РЎРїРµС†РёР°Р»СЊРЅС‹Рµ СЃС‚РёР»Рё РґР»СЏ РіСЂСѓРїРїС‹ РїРѕР»РµР№ РІ РѕРґРЅРѕР№ СЃС‚СЂРѕРєРµ */
 .form-row {
   display: flex;
   gap: 1rem;
@@ -239,7 +242,6 @@ th {
   min-width: 0;
 }
 
-/* РЎС‚РёР»СЊ РґР»СЏ select СЌР»РµРјРµРЅС‚Р° */
 .form-container select {
   background: hsla(0, 0%, 20%, 0.9);
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
@@ -272,7 +274,6 @@ th {
   outline: none;
 }
 
-/* Р”Р»СЏ РјРѕР±РёР»СЊРЅС‹С… СѓСЃС‚СЂРѕР№СЃС‚РІ */
 @media (max-width: 1200px) {
   .form-container {
     width: 70%;
@@ -298,7 +299,6 @@ th {
   }
 }
 
-/* РћР±С‰РёР№ СЃС‚РёР»СЊ РґР»СЏ РІСЃРµС… РєРѕРЅС‚РµР№РЅРµСЂРѕРІ РїРѕР»РµР№ */
 #client-name-container,
 #work-term-container,
 #client-select-container {
@@ -376,7 +376,6 @@ th {
   color: #4caf50;
 }
 
-/* РЎС‚РёР»Рё РґР»СЏ РјРѕР±РёР»СЊРЅРёРєРѕРІ */
 @media (max-width: 768px) {
   .nav-group {
     width: 100%;
@@ -391,14 +390,14 @@ th {
 }
 
 /*=============== FILE EDIT FORM ===============*/
-/* РћР±РЅРѕРІР»РµРЅРЅС‹Р№ СЃС‚РёР»СЊ РґР»СЏ textarea */
+/* Обновленный стиль для textarea */
 .file-edit-form textarea {
   width: 100%;
-  /* Р—Р°РЅРёРјР°РµС‚ 100% С€РёСЂРёРЅС‹ СЌРєСЂР°РЅР° */
+  /* Занимает 100% ширины экрана */
   margin: 1rem auto;
-  /* Р¦РµРЅС‚СЂРёСЂРѕРІР°РЅРёРµ */
+  /* Центрирование */
   display: block;
-  /* Р‘Р»РѕРєРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ */
+  /* Блоковый элемент */
   padding: 0.8rem;
   background: hsla(0, 0%, 20%, 0.7);
   border: 1px solid hsl(0, 0%, 50%);
@@ -416,14 +415,14 @@ th {
   outline: none;
 }
 
-/* РћР±РЅРѕРІР»РµРЅРЅС‹Р№ СЃС‚РёР»СЊ РґР»СЏ РєРЅРѕРїРєРё file-toggle */
+/* Обновленный стиль для кнопки file-toggle */
 .file-toggle {
   width: 100%;
-  /* Р—Р°РЅРёРјР°РµС‚ 100% С€РёСЂРёРЅС‹ СЌРєСЂР°РЅР° */
+  /* Занимает 100% ширины экрана */
   margin: 1rem auto;
-  /* Р¦РµРЅС‚СЂРёСЂРѕРІР°РЅРёРµ */
+  /* Центрирование */
   display: block;
-  /* Р‘Р»РѕРєРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ */
+  /* Блоковый элемент */
   padding: 0.8rem;
   background: hsla(0, 0%, 20%, 0.7);
   border: 1px solid hsl(0, 0%, 50%);
@@ -466,7 +465,7 @@ th {
   border: 2px solid #4caf50;
 }
 
-/* РЎС‚РёР»Рё РґР»СЏ РјРѕРґР°Р»СЊРЅРѕРіРѕ СѓРІРµРґРѕРјР»РµРЅРёСЏ */
+/* Стили для модального уведомления */
 .loading-modal {
   text-align: center;
   background: rgba(255, 255, 255, 0.9);
@@ -584,7 +583,7 @@ th {
   margin-bottom: 0.5rem;
 }
 
-/* РЎС‚РёР»Рё РґР»СЏ СѓРІРµРґРѕРјР»РµРЅРёР№ */
+/* Стили для уведомлений */
 .notification {
   position: fixed;
   top: 20px;
@@ -629,7 +628,7 @@ th {
   }
 }
 
-/* РЎС‚РёР»Рё РґР»СЏ РЅРµРЅР°РІСЏР·С‡РёРІРѕРіРѕ РёРЅРґРёРєР°С‚РѕСЂР° Р·Р°РіСЂСѓР·РєРё */
+/* Стили для ненавязчивого индикатора загрузки */
 #loading-indicator {
   position: fixed;
   bottom: 20px;
@@ -689,7 +688,7 @@ th {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  /* min-height РЅРµ РЅСѓР¶РµРЅ, РєР°СЂС‚РѕС‡РєРё СЃР°РјРё РІС‹СЂРѕРІРЅСЏСЋС‚СЃСЏ РїРѕ РІС‹СЃРѕС‚Рµ */
+  /* min-height не нужен, карточки сами выровняются по высоте */
 }
 
 .info-item {
@@ -706,7 +705,7 @@ th {
   min-width: 260px;
   max-width: 350px;
   min-height: 320px;
-  /* РѕРґРёРЅР°РєРѕРІР°СЏ РІС‹СЃРѕС‚Р° РєР°СЂС‚РѕС‡РµРє */
+  /* одинаковая высота карточек */
   box-shadow: 0 4px 24px rgba(76, 175, 80, 0.08);
   transition: box-shadow 0.2s;
   margin: 0;
@@ -870,7 +869,7 @@ th {
 }
 
 /*=============== FOOTER STYLES ===============*/
-/* Р¦РІРµС‚Р° */
+/* Цвета */
 :root {
   --primary-color: #4caf50;
   --secondary-color: #2196f3;
@@ -881,14 +880,14 @@ th {
   --sidebar-bg: hsla(0, 0%, 10%, 0.9);
   --content-bg: hsla(0, 0%, 15%, 0.7);
 
-  /* Р Р°Р·РјРµСЂС‹ */
+  /* Размеры */
   --sidebar-width: 250px;
   --max-content-width: 1400px;
   --side-padding: 1rem;
   --mobile-breakpoint: 992px;
 }
 
-/* Р‘Р°Р·РѕРІС‹Рµ СЃС‚РёР»Рё */
+/* Базовые стили */
 .settings-page-wrapper {
   padding: 1rem 0;
   background-color: hsla(0, 0%, 5%, 0.8);
@@ -904,7 +903,7 @@ th {
   box-sizing: border-box;
 }
 
-/* РњРѕР±РёР»СЊРЅРѕРµ РјРµРЅСЋ */
+/* Мобильное меню */
 .settings-sidebar {
   width: 100%;
   background-color: var(--sidebar-bg);
@@ -969,7 +968,7 @@ th {
   font-weight: 500;
 }
 
-/* РћСЃРЅРѕРІРЅРѕР№ РєРѕРЅС‚РµРЅС‚ */
+/* Основной контент */
 .settings-content {
   width: 100%;
   padding: 1rem;
@@ -986,7 +985,7 @@ th {
   display: block;
 }
 
-/* Р’РєР»Р°РґРєРё РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ */
+/* Вкладки пользователей */
 .user-management-tabs {
   display: flex;
   overflow-x: auto;
@@ -1031,7 +1030,7 @@ th {
   display: block;
 }
 
-/* Р¤РѕСЂРјС‹ */
+/* Формы */
 .settings-form {
   max-width: 100%;
 }
@@ -1092,7 +1091,7 @@ th {
   transform: translateY(-1px);
 }
 
-/* РЎРїРёСЃРѕРє РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ */
+/* Список пользователей */
 .users-list ul {
   list-style: none;
   padding: 0;
@@ -1117,7 +1116,7 @@ th {
   font-size: 0.95rem;
 }
 
-/* Р”РµСЃРєС‚РѕРїРЅР°СЏ РІРµСЂСЃРёСЏ */
+/* Десктопная версия */
 @media (min-width: 992px) {
   .settings-layout {
     flex-direction: row;
@@ -1171,7 +1170,7 @@ th {
   }
 }
 
-/* Р›Р°РЅРґС€Р°С„С‚РЅС‹Р№ СЂРµР¶РёРј РЅР° РјРѕР±РёР»СЊРЅС‹С… */
+/* Ландшафтный режим на мобильных */
 @media (max-width: 992px) and (orientation: landscape) {
   .settings-sidebar {
     position: sticky;
@@ -1201,7 +1200,7 @@ th {
   font-size: 20px;
   color: hsl(0, 0%, 90%);
   margin-right: 15px;
-  line-height: 34px; /* Р’С‹СЂР°РІРЅРёРІР°РµРј РїРѕ РІС‹СЃРѕС‚Рµ СЃР»Р°Р№РґРµСЂР° */
+  line-height: 34px; /* Выравниваем по высоте слайдера */
 }
 
 .toggle-switch {
@@ -1245,7 +1244,7 @@ th {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* РЎС‚РёР»Рё РґР»СЏ Р°РєС‚РёРІРЅРѕРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ */
+/* Стили для активного состояния */
 .toggle-input:checked + .toggle-slider {
   background-color: #4caf50;
 }
@@ -1254,18 +1253,18 @@ th {
   transform: translateX(26px);
 }
 
-/* Р­С„С„РµРєС‚ РїСЂРё С„РѕРєСѓСЃРµ */
+/* Эффект при фокусе */
 .toggle-input:focus + .toggle-slider {
   box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
 }
 
-/* РђРЅРёРјР°С†РёСЏ РїСЂРё РЅР°Р¶Р°С‚РёРё */
+/* Анимация при нажатии */
 .toggle-input:active + .toggle-slider:before {
   width: 30px;
   margin-left: -2px;
 }
 
-/* РћС‚РєР»СЋС‡РµРЅРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ */
+/* Отключенное состояние */
 .toggle-input:disabled + .toggle-slider {
   background-color: #e0e0e0;
   cursor: not-allowed;
@@ -1282,13 +1281,13 @@ th {
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
 }
-/* РђРЅРёРјР°С†РёСЏ РїРѕСЏРІР»РµРЅРёСЏ */
+/* Анимация появления */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* РђРґР°РїС‚Р°С†РёСЏ РґР»СЏ РјРѕР±РёР»СЊРЅС‹С… */
+/* Адаптация для мобильных */
 @media (max-width: 768px) {
     .toggle-label.has-tooltip:hover::after {
         width: 240px;
@@ -1366,7 +1365,7 @@ th {
     display: block;
 }
 
-/* РђРґР°РїС‚Р°С†РёСЏ РґР»СЏ РјРѕР±РёР»СЊРЅС‹С… */
+/* Адаптация для мобильных */
 @media (max-width: 992px) {
     .config-grid {
         grid-template-columns: 1fr;

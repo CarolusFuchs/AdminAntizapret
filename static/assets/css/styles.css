@@ -32,10 +32,6 @@ button {
 
 body {
   color: var(--white-color);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
 }
 
 input,
@@ -55,34 +51,34 @@ img {
 
 /*=============== LOGIN ===============*/
 .login {
-  position: relative; /* РР·РјРµРЅРµРЅРѕ СЃ absolute РЅР° relative */
+  position: relative;
   display: grid;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Р—Р°РЅРёРјР°РµС‚ РІСЃСЋ РІС‹СЃРѕС‚Сѓ СЌРєСЂР°РЅР° */
-  width: 100%; /* Р—Р°РЅРёРјР°РµС‚ РІСЃСЋ С€РёСЂРёРЅСѓ СЌРєСЂР°РЅР° */
+  height: 100dvh;
+  width: 100%;
+  
+  /* --- Изображение по умолчанию (для компьютеров) --- */
+  background-image: url('../img/loginnew-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .login__img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: -1; /* РџРµСЂРµРјРµС‰Р°РµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ РЅР° Р·Р°РґРЅРёР№ РїР»Р°РЅ */
+  /* Этот класс больше не управляет фоном, скрываем его */
+  display: none;
 }
 
 .login__form {
   position: relative;
-  background-color: hsla(0, 0%, 10%, 0.7); /* РЈРІРµР»РёС‡РµРЅР° РїСЂРѕР·СЂР°С‡РЅРѕСЃС‚СЊ */
+  background-color: hsla(0, 0%, 10%, 0.7);
   border: 2px solid var(--white-color);
   margin-inline: 1.5rem;
   padding: 2.5rem 1.5rem;
   border-radius: 1rem;
   backdrop-filter: blur(8px);
-  z-index: 1; /* РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С„РѕСЂРјСѓ РїРѕРІРµСЂС… С„РѕРЅР° */
+  z-index: 1;
 }
 
 .login__title {
@@ -190,7 +186,13 @@ img {
   align-items: center;
 }
 
+/* --- ИЗМЕНЕНИЯ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ (768px и меньше) --- */
 @media (max-width: 768px) {
+  /* Заменяем фон на мобильную версию */
+  .login {
+    background-image: url('../img/loginnew-bgt.jpg');
+  }
+
   .captcha-container {
     flex-direction: column;
     align-items: flex-start;
@@ -283,7 +285,7 @@ img {
 }
 
 .notification-info {
-  background-color: #2196f3; /* РЎРёРЅРёР№ С†РІРµС‚ РґР»СЏ РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹С… СЃРѕРѕР±С‰РµРЅРёР№ */
+  background-color: #2196f3;
 }
 
 .notification-success {
@@ -325,11 +327,12 @@ img {
     font-size: 2rem;
   }
 }
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px transparent inset !important; /* РџСЂРѕР·СЂР°С‡РЅС‹Р№ С„РѕРЅ */
-  -webkit-text-fill-color: #f8f7f7 !important; /* Р¦РІРµС‚ С‚РµРєСЃС‚Р° */
-  transition: background-color 5000s ease-in-out 0s; /* РћС‚РєР»СЋС‡Р°РµРј Р°РЅРёРјР°С†РёСЋ */
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: #f8f7f7 !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
