@@ -1,7 +1,6 @@
 {% extends "base.html" %} {% block title %}Настройки{% endblock %} {% block
 content %}
 <div class="settings-layout">
-  <!-- Боковое меню -->
   <div class="settings-page-wrapper">
     <div class="settings-layout">
       <h3>Настройки</h3>
@@ -15,16 +14,16 @@ content %}
         <i class="icon">⚙️</i>
         <span>Настройки порта</span>
       </li>
+      {#
       <li class="menu-item" data-tab="user-management">
         <i class="icon">👥</i>
         <span>Управление пользователями</span>
       </li>
+      #}
     </ul>
   </div>
 
-  <!-- Основное содержимое -->
   <div class="settings-content">
-    <!-- Настройки порта -->
     <div id="port-settings" class="content-tab active">
       <h2>Настройки порта</h2>
       <form method="POST" class="settings-form">
@@ -42,7 +41,7 @@ content %}
       </form>
     </div>
 
-    <!-- Управление пользователями -->
+    {#
     <div id="user-management" class="content-tab">
       <div class="user-management-tabs">
         <button class="tab-button active" data-subtab="add-user">
@@ -114,17 +113,16 @@ content %}
         </form>
       </div>
     </div>
+    #}
 
     <div id="antizapret-config" class="content-tab active">
       <h2>Конфигурирование Antizapret</h2>
       <p class="config-description">
-        Включить маршрутизацию через Antizapret для:
+        Настройки туннелирования Antizapret. Внимание! При любых изменениях на этой странице конфигурационные файлы AmneziaWG будут обновлены. Для корретной работы с новой маршрутизации потребуется повторное скачивание и установка их на компьютеры и телефоны. Это не касается OpenVPN файлов и файлов VPN подключений AmneziaWG.
       </p>
 
       <div class="config-grid">
-        <!-- Первый столбец -->
         <div class="config-column">
-          <!-- ROUTE_ALL -->
           <div class="config-item">
             <label class="toggle-wrapper">
               <span class="toggle-label">
@@ -146,7 +144,6 @@ content %}
             </div>
           </div>
 
-          <!-- DISCORD_INCLUDE -->
           <div class="config-item">
             <label class="toggle-wrapper">
               <span class="toggle-label">
@@ -168,7 +165,6 @@ content %}
             </div>
           </div>
 
-          <!-- CLOUDFLARE_INCLUDE -->
           <div class="config-item">
             <label class="toggle-wrapper">
               <span class="toggle-label">
@@ -190,7 +186,6 @@ content %}
             </div>
           </div>
 
-          <!-- AMAZON_INCLUDE -->
           <div class="config-item">
             <label class="toggle-wrapper">
               <span class="toggle-label">
@@ -212,8 +207,7 @@ content %}
             </div>
           </div>
 
-                    <!-- GOOGLE_INCLUDE -->
-          <div class="config-item">
+                    <div class="config-item">
             <label class="toggle-wrapper">
               <span class="toggle-label">
                 <span class="config-item-title">Google</span>
@@ -235,9 +229,7 @@ content %}
           </div>
         </div>
 
-        <!-- Второй столбец -->
         <div class="config-column">
-          <!-- HETZNER_INCLUDE -->
           <div class="config-item">
             <label class="toggle-wrapper">
               <span class="toggle-label">
@@ -259,7 +251,6 @@ content %}
             </div>
           </div>
 
-          <!-- DIGITALOCEAN_INCLUDE -->
           <div class="config-item">
             <label class="toggle-wrapper">
               <span class="toggle-label">
@@ -281,7 +272,6 @@ content %}
             </div>
           </div>
 
-          <!-- OVH_INCLUDE -->
           <div class="config-item">
             <label class="toggle-wrapper">
               <span class="toggle-label">
@@ -299,25 +289,6 @@ content %}
             </div>
           </div>
 
-                    <!-- AKAMAI_INCLUDE -->
-          <div class="config-item">
-            <label class="toggle-wrapper">
-              <span class="toggle-label">
-                <span class="config-item-title">Akamai</span>
-                <span class="config-item-param">(AKAMAI_INCLUDE)</span>
-              </span>
-              <div class="toggle-switch">
-                <input type="checkbox" id="akamai-toggle" class="toggle-input" />
-                <span class="toggle-slider"></span>
-              </div>
-            </label>
-            <div class="config-item-tooltip">
-              Перенаправляет трафик Akamai через antizapret, включая сайты и
-              сервисы, использующие Akamai для доставки контента.
-            </div>
-          </div>
-
-          <!-- TELEGRAM_INCLUDE -->
           <div class="config-item">
             <label class="toggle-wrapper">
               <span class="toggle-label">
@@ -340,7 +311,6 @@ content %}
           </div>
         </div>
       </div>
-      <!----------------------- AdBlock ----------------------->
       <p class="config-description">Включить блокировку рекламы, трекеров, вредоносных программ и
             фишинговых веб-сайтов для Antizapret:</p>
       <div class="config-grid">

@@ -16,17 +16,11 @@
       href="{{ url_for('static', filename='assets/css/styles.css') }}"
     />
 
-    <title>AdminVPN Claymore</title>
+    <title>AdminVPN Feitico</title>
   </head>
   <body>
     <div id="notification" class="notification" style="display: none"></div>
     <div class="login">
-      <img
-        src="{{ url_for('static', filename='assets/img/login-bg.png') }}"
-        alt="login image"
-        class="login__img"
-      />
-
       <script id="flash-messages" type="application/json">
         {{ get_flashed_messages(with_categories=True) | tojson }}
       </script>
