@@ -39,7 +39,7 @@
 ## 🚀 Быстрый старт
 1. Установите через `install.sh`:
    ```bash
-   bash <(wget -qO- https://raw.githubusercontent.com/Kirito0098/AdminAntizapret/refs/heads/main/install.sh)
+   bash <(wget -qO- https://raw.githubusercontent.com/CarolusFuchs/AdminAntizapret/refs/heads/main/install.sh)
    ```
 > **Примечание:** Механика работы с Let's Encrypt изменена:
 > - Таблица маршрутизации временно очищается от 80 TCP порта при получении сертификата, затем восстанавливается.
