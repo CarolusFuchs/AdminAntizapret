@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Редактирование файлов АнтиЗапрета{%
+{% extends "base.html" %} {% block title %}Редактирование файлов Split Tunnel{%
 endblock %} {% block content %}
 
 <div id="loading-overlay" style="display: none">
@@ -17,9 +17,9 @@ endblock %} {% block content %}
   <div class="file-section">
     <button class="file-toggle" data-target="{{ file_type }}">
       {% if file_type == "include_hosts" %} Добавить свои сайты в список
-      АнтиЗапрета {% elif file_type == "exclude_hosts" %} Исключить свои сайты
-      из списка АнтиЗапрета {% elif file_type == "include_ips" %} Добавить свои
-      IP-адреса в список АнтиЗапрета {% else %} {{ file_type.replace('_', '
+      Split Tunnel {% elif file_type == "exclude_hosts" %} Исключить свои сайты
+      из списка Split Tunnel {% elif file_type == "include_ips" %} Добавить свои
+      IP-адреса в список Split Tunnel {% else %} {{ file_type.replace('_', '
       ').capitalize() }} {% endif %}
     </button>
     <form
@@ -39,7 +39,7 @@ endblock %} {% block content %}
 </div>
 
 <div class="form-container">
-  <button id="run-doall">Обновить список АнтиЗапрета</button>
+  <button id="run-doall">Обновить список Split Tunnel</button>
 </div>
 {% endblock %} {% block scripts %}
 <script>
